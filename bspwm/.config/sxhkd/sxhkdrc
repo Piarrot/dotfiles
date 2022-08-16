@@ -21,11 +21,12 @@ super + l
 # file explorer
 super + @e
 	thunar
+
 # Change volume
 XF86Audio{Raise,Lower}Volume
 	pactl set-sink-volume 1 {+,-}5%
 
-#=====================================
+#=============================:========
 # bspwm hotkeys
 #=====================================
 
@@ -119,6 +120,8 @@ super + {Left,Down,Up,Right}
 super + Escape
 	pkill -USR1 -x sxhkd
 
+super + alt + r
+    bspc restart
 
 # quit bspwm normally
 super + alt + Escape

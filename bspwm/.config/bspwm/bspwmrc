@@ -1,10 +1,12 @@
 #! /bin/sh
 
 sxhkd &
-# lxpolkit &
-# gnome-keyring-daemon --start --components=pkcs11,secrets,ssh &
+picom &
+lxpolkit &
+gnome-keyring-daemon --start --components=pkcs11,secrets,ssh &
 thunar --daemon &
 numlockx &
+flameshot &
 xsetroot -cursor_name left_ptr &
 
 bspc monitor HDMI-0 -d 1 2 3 4 5

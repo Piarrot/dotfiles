@@ -24,7 +24,7 @@ super + @e
 
 # Change volume
 XF86Audio{Raise,Lower}Volume
-	pactl set-sink-volume 1 {+,-}5%
+	pactl set-sink-volume alsa_output.pci-0000_0a_00.4.analog-stereo {+,-}5%
 
 #=============================:========
 # bspwm hotkeys
@@ -121,7 +121,7 @@ super + Escape
 	pkill -USR1 -x sxhkd
 
 super + alt + r
-    bspc restart
+    bspc wm --restart
 
 # quit bspwm normally
 super + alt + Escape

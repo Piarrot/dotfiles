@@ -3,6 +3,7 @@
 sxhkd &
 picom &
 lxpolkit &
+eww daemon &
 gnome-keyring-daemon --start --components=pkcs11,secrets,ssh &
 thunar --daemon &
 numlockx &
@@ -10,7 +11,9 @@ flameshot &
 xsetroot -cursor_name left_ptr &
 
 bspc monitor HDMI-0 -d 1 2 3 4 5
-bspc monitor DP-0 -d 6 7 8 9 10 
+bspc monitor DP-0 -d 6 7 8 9 10
+
+# bspc config -m HDMI-0 top_padding 20
 
 bspc config border_width         2
 bspc config window_gap          12
@@ -22,12 +25,7 @@ bspc config gapless_monocle      true
 # Prevents focus stealing
 bspc config ignore_ewmh_focus true
 
-
-bspc rule -a Gimp desktop='^8' state=floating follow=on
-bspc rule -a Chromium desktop='^2'
-bspc rule -a mplayer2 state=floating
-bspc rule -a Kupfer.py focus=on
-bspc rule -a Screenkey manage=off
+bspc rule -a ColorGrab state=floating
 
 . "${HOME}/.cache/wal/colors.sh"
 

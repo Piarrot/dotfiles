@@ -1,0 +1,47 @@
+(defpoll time :interval "10s"
+"date '+%H:%M %b %d, %Y'")
+
+(defwidget workspaces []
+  (box :orientation "h"
+    :class "workspaces"
+    :space-evenly false
+    :halign "start"
+    (button :onclick "bspc desktop -f 1" 1)
+    (button :onclick "bspc desktop -f 2" 2)
+    (button :onclick "bspc desktop -f 3" 3)
+    (button :onclick "bspc desktop -f 4" 4)
+    (button :onclick "bspc desktop -f 5" 5)
+    (button :onclick "bspc desktop -f 6" 6)))
+
+(defwidget right []
+  (box :orientation "h"
+    :space-evenly false
+    :halign "end"
+    :class "right_modules"
+    time
+  ))
+
+(defwidget center []
+  (box :orientation "h"
+    :space-evenly false
+    :halign "center"
+    :class "center_modules"
+  ))
+
+(defwidget bar_1 []
+  (box :class "bar"
+    :orientation "h"
+    (workspaces)
+    (center)
+    (right)
+  ))
+
+(defwindow bar
+  :geometry (geometry :x "0%"
+    :y "0px"
+    :width "1920px"
+    :height "30px"
+  :anchor "top center")
+  :stacking "fg"
+  :windowtype "dock"
+  (bar_1))

@@ -2,7 +2,7 @@ local opt = {
     backup = false,
     clipboard = "unnamedplus",
     cmdheight = 1,
-    completeopt = {"menuone","noselect"},
+    completeopt = {"menuone", "noselect"},
     conceallevel = 0,
     fileencoding = "utf-8",
     hlsearch = true,
@@ -10,15 +10,15 @@ local opt = {
     mouse = "a",
     showmode = false,
     showtabline = 2,
-    smartcase=true,
-    smartindent=true,
+    smartcase = true,
+    smartindent = true,
     splitbelow = true,
     splitright = true,
     termguicolors = true,
-    undofile=true,
-    updatetime=300,
-    writebackup=false,
-    expandtab=true,
+    undofile = true,
+    updatetime = 300,
+    writebackup = false,
+    expandtab = true,
     shiftwidth = 4,
     tabstop = 4,
     cursorline = true,
@@ -28,10 +28,10 @@ local opt = {
     signcolumn = "yes",
     wrap = false,
     scrolloff = 8,
-    sidescrolloff = 8,
+    sidescrolloff = 8
 }
 
-for k,v in pairs(opt) do
+for k, v in pairs(opt) do
     vim.opt[k] = v
 end
 

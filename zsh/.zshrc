@@ -7,9 +7,10 @@ alias pacrem="yay -Rsn"
 alias pacsearch="yay -Ss"
 
 #Configs
-alias zconf="nvim ~/.zshrc && source ~/.zshrc"
+alias zsconf="nvim ~/.zshrc && source ~/.zshrc"
 alias bspconf="nvim ~/.config/bspwm/bspwmrc"
 alias sxconf="nvim ~/.config/sxhkd/sxhkdrc"
+alias alaconf="nvim ~/.config/alacritty/alacritty.yml"
 
 ########################################
 # TERMINAL CONFIG
@@ -126,4 +127,15 @@ fi
 source /usr/share/nvm/nvm.sh
 source /usr/share/nvm/bash_completion
 source /usr/share/nvm/install-nvm-exec
+
+
+##########################
+# WAL
+##########################
+(cat ~/.cache/wal/sequences &)
+source ~/.cache/wal/colors-tty.sh
+waltile() {
+    wal -n -i "$@"
+    feh --bg-tile "$(< "${HOME}/.cache/wal/wal")"
+}
 

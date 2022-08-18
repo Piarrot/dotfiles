@@ -95,6 +95,8 @@ source "$ZSH/oh-my-zsh.sh"
 # Configs
 ########################################
 
+export PATH="$HOME/bin:$PATH"
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment

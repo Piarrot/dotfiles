@@ -26,6 +26,10 @@ super + @e
 XF86Audio{Raise,Lower}Volume
 	pactl set-sink-volume alsa_output.pci-0000_0a_00.4.analog-stereo {+,-}5%
 
+Print
+    flameshot gui
+    
+
 #=============================:========
 # bspwm hotkeys
 #=====================================

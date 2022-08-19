@@ -12,7 +12,6 @@ const stringify = (thing) => JSON.stringify(thing, null, 4);
 if (isMonorepoProject) {
   await $`yarn init -2 -w`;
   await $`yarn plugin import workspace-tools`;
-  await $`mkdir packages`;
 } else {
   await $`yarn init -2`;
   await $`mkdir src`;
@@ -20,7 +19,7 @@ if (isMonorepoProject) {
 }
 
 if (useNodeModulesLinker) {
-  const yarnrc = YAML.parse(await fs.readFile(".yarnrc.yml"));
+  const yarnrc = YAML.parse(await fs.readFile(".yarnrc.yml", "utf-8"));
   yarnrc.nodeLinker = "node-modules";
   await fs.writeFile(".yarnrc.yml", YAML.stringify(yarnrc));
 }
@@ -60,18 +59,18 @@ await $`yarn add -D ${initialPackages}`;
 
 const packageJson = await fs.readJson("package.json");
 if (isMonorepoProject) {
-  packageJson.workspaces = ["packages/*"];
   packageJson.scripts = {
     w: "yarn workspace",
     "w:each": `yarn workspaces foreach -vipt --exclude '${packageJson.name}' run`,
-    "test:pre-commit": "yarn w:each test --bail --findRelatedTests",
+    "test:pre-commit":
+      "yarn w:each test --bail --findRelatedTests --passWithNoTests",
   };
 } else {
   packageJson.scripts = {
     build: "tsc",
     watch: "tsc --watch",
     test: "jest",
-    "test:pre-commit": "yarn test --bail --findRelatedTests",
+    "test:pre-commit": "yarn test --bail --findRelatedTests --passWithNoTests",
   };
 }
 
@@ -186,3 +185,5 @@ const prettierIgnore = [
   "**/.pnp.*",
 ];
 await fs.writeFile(".prettierignore", prettierIgnore.join("\n"));
+
+await $`git add . && git commit -m "Initial commit"`;

@@ -15,6 +15,8 @@ return {
         launcher = "rofi -show run",
         launch_editor = launch_editor,
         file_manager = "thunar",
-        launch_compositor = 'DISPLAY=":0" picom -b --experimental-backends && DISPLAY=":1" picom -b --experimental-backends'
+        launch_compositor = 'DISPLAY=":0" picom -b --experimental-backends && DISPLAY=":1" picom -b --experimental-backends',
+        screenshot = "flameshot",
+        trigger_screenshot = "flameshot gui"
     }
 }

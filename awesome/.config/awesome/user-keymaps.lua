@@ -17,12 +17,12 @@ awful.keyboard.append_global_keybindings({
     end, { description = "open terminal", group = "app" }),
 
     -- App Launcher
-    awful.key({ keys.mod }, "Space", function()
+    awful.key({ keys.mod }, " ", function()
         awful.spawn(apps.launcher)
     end, { description = "open app launcher", group = "app" }),
 
     --- File manager
-    awful.key({ keys.mod, keys.shift }, "e", function()
+    awful.key({ keys.mod }, "e", function()
         awful.spawn(apps.file_manager)
     end, { description = "open file manager", group = "app" }),
 
@@ -49,10 +49,10 @@ awful.keyboard.append_global_keybindings({
         resize_client(client.focus, "down")
     end, { description = "resize to the down", group = "client" }),
     awful.key({ keys.mod, keys.ctrl }, "Left", function(c)
-        resize_client(client.focus, "left")
+        resize_client(client.focus, "right")
     end, { description = "resize to the left", group = "client" }),
     awful.key({ keys.mod, keys.ctrl }, "Right", function(c)
-        resize_client(client.focus, "right")
+        resize_client(client.focus, "left")
     end, { description = "resize to the right", group = "client" }),
 
     --- VOLUME CONTROL
@@ -71,24 +71,24 @@ awful.keyboard.append_global_keybindings({
     end, { description = "mute volume", group = "hotkeys" }),
 
     --- Music
-    awful.key({}, "XF86AudioPlay", function()
-        playerctl_daemon:play_pause()
-    end, { description = "play pause music", group = "hotkeys" }),
-    awful.key({}, "XF86AudioPrev", function()
-        playerctl_daemon:previous()
-    end, { description = "previous music", group = "hotkeys" }),
-    awful.key({}, "XF86AudioNext", function()
-        playerctl_daemon:next()
-    end, { description = "next music", group = "hotkeys" }),
+    -- awful.key({}, "XF86AudioPlay", function()
+    --     playerctl_daemon:play_pause()
+    -- end, { description = "play pause music", group = "hotkeys" }),
+    -- awful.key({}, "XF86AudioPrev", function()
+    --     playerctl_daemon:previous()
+    -- end, { description = "previous music", group = "hotkeys" }),
+    -- awful.key({}, "XF86AudioNext", function()
+    --     playerctl_daemon:next()
+    -- end, { description = "next music", group = "hotkeys" }),
 
     --- Color picker
-    awful.key({ keys.mod }, "x", function()
-        awful.spawn.easy_async_with_shell(apps.utils.color_picker, function() end)
-    end, { description = "open color picker", group = "hotkeys" }),
+    -- awful.key({ keys.mod }, "x", function()
+    --     awful.spawn.easy_async_with_shell(apps.utils.color_picker, function() end)
+    -- end, { description = "open color picker", group = "hotkeys" }),
 
     --- Screenshots
     awful.key({}, "Print", function()
-        awful.spawn("flameshot gui", function() end)
+        awful.spawn(apps.trigger_screenshot, function() end)
     end, { description = "take a full screenshot", group = "hotkeys" }),
 
     --- Restart awesome
@@ -100,6 +100,33 @@ awful.keyboard.append_global_keybindings({
     --- Show help
     awful.key({ keys.mod }, "F1", hotkeys_popup.show_help, { description = "show Help", group = "WM" }),
 })
+
+-----------------------------------------------
+-- TAGS
+-----------------------------------------------
+for i = 1, 9 do
+    awful.keyboard.append_global_keybindings({
+        awful.key({ keys.mod }, "#" .. i + 9, function()
+            local tag = awful.screen.focused().tags[i]
+            if tag then
+                tag:view_only()
+            end
+        end, {
+            description = "view tag #" .. i,
+            group = "tag"
+        }),
+
+        awful.key({ keys.mod, "Control" }, "#" .. i + 9, function()
+            local tag = awful.screen.focused().tags[i]
+            if tag then
+                client.focus:move_to_tag(tag);
+            end
+        end, {
+            description = "move focused client to tag #" .. i,
+            group = "tag"
+        }), -- Move client to tag.
+    })
+end
 
 awful.mouse.append_global_mousebindings({
     --- Left click

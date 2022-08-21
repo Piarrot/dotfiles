@@ -4,8 +4,6 @@ pcall(require, "luarocks.loader")
 
 require("user-errorhandlers")
 
--- {{{ Variable definitions
--- Themes define colours, icons, font and wallpapers.
 require("user-theme")
 
 require("user-layouts")

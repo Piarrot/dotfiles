@@ -11,8 +11,6 @@ require("awful.autofocus")
 
 menubar.utils.terminal = apps.terminal -- Set the terminal for applications that require it
 
-local mytextclock = wibox.widget.textclock()
-
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(awful.button({}, 1, function(t)
     t:view_only()
@@ -34,14 +32,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     --- Each screen has its own tag table.
     awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
 
-    if (s.index == 0) then
-        -- Create a taglist widget
-        s.mytaglist = awful.widget.taglist {
-            screen = s,
-            filter = awful.widget.taglist.filter.all,
-            buttons = taglist_buttons
-        }
-
+    if (s.index == 1) then
         -- Create the wibox
         s.mywibox = awful.wibar({
             position = "top",
@@ -49,14 +40,28 @@ screen.connect_signal("request::desktop_decoration", function(s)
         })
 
         -- Add widgets to the wibox
-        s.mywibox:setup {
+        s.mywibox:setup({
             layout = wibox.layout.align.horizontal,
             {
-                layout = wibox.layout.align.horizontal,
+                layout = wibox.layout.fixed.horizontal,
+
+                awful.widget.taglist {
+                    screen = s,
+                    filter = awful.widget.taglist.filter.all,
+                    buttons = taglist_buttons
+                },
+            },
+            {
+                layout = wibox.layout.fixed.horizontal,
+            },
+            {
+                layout = wibox.layout.fixed.horizontal,
+
                 wibox.widget.systray(),
-                mytextclock,
-            }
-        }
+                wibox.widget.textclock(),
+            },
+
+        })
     end
 end)
 
@@ -66,17 +71,17 @@ client.connect_signal("mouse::enter", function(c)
 end)
 
 --- Wallpapers
-awful.screen.connect_for_each_screen(function(s)
-    if beautiful.wallpaper then
-        local wallpaper = beautiful.wallpaper
-
-        if type(wallpaper) == "function" then
-            wallpaper = wallpaper(s)
-        end
-
-        -- gears.wallpaper.set("#2E2E2E", s, false, nil)
-        gears.wallpaper.maximized(wallpaper, s, false, nil)
-    end
+screen.connect_signal("request::wallpaper", function(s)
+    awful.wallpaper {
+        screen = s,
+        widget = {
+            image                 = beautiful.wallpaper,
+            resize                = true,
+            widget                = wibox.widget.imagebox,
+            horizontal_fit_policy = "fit",
+            vertical_fit_policy   = "fit",
+        }
+    }
 end)
 
 client.connect_signal("focus", function(c)

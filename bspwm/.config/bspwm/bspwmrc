@@ -2,8 +2,6 @@
 
 
 
-xsetroot -cursor_name left_ptr &
-
 bspc monitor HDMI-0 -d 1 2 3 4 5 6 7 8 9
 bspc monitor DP-0 -d 10
 
@@ -32,7 +30,8 @@ bspc config presel_feedback_color "$color1"
 eww open bar &
 sxhkd &
 dunst &
-picom -b
+xsetroot -cursor_name left_ptr &
+DISPLAY=":0" picom -b --experimental-backends && DISPLAY=":1" picom -b --experimental-backends #multimonitor compositing
 lxpolkit &
 eww daemon &
 gnome-keyring-daemon --start --components=pkcs11,secrets,ssh &

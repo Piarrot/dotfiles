@@ -1,8 +1,20 @@
 -- This is used later as the default terminal and editor to run.
-TERMINAL = "alacritty"
-LAUNCHER = "rofi -show run"
-EDITOR = os.getenv("EDITOR") or "nvim"
-LAUNCH_EDITOR_COMMAND = TERMINAL .. " -e " .. EDITOR
+local terminal = "alacritty"
+local editor = os.getenv("EDITOR") or "nvim"
+local launch_editor = terminal .. " -e " .. editor
 
--- Default modkey.
-MODKEY = "Mod4" --Super
+return {
+    keys = {
+        mod = "Mod4", --SUPER
+        alt = "Mod1",
+        ctrl = "Control",
+        shift = "Shift",
+    },
+    apps = {
+        terminal = terminal,
+        launcher = "rofi -show run",
+        launch_editor = launch_editor,
+        file_manager = "thunar",
+        launch_compositor = 'DISPLAY=":0" picom -b --experimental-backends && DISPLAY=":1" picom -b --experimental-backends'
+    }
+}

@@ -97,6 +97,8 @@ source "$ZSH/oh-my-zsh.sh"
 
 export PATH="$HOME/bin:$PATH"
 
+export PATH="$PATH:/opt/insomnia"
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment

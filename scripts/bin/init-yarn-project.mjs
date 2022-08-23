@@ -2,6 +2,7 @@
 
 const isMonorepoProject = argv.monorepo;
 const useNodeModulesLinker = argv["node-modules"];
+const isMinimal = argv["minimal"];
 
 const stringify = (thing) => JSON.stringify(thing, null, 4);
 
@@ -15,7 +16,11 @@ if (isMonorepoProject) {
 } else {
   await $`yarn init -2`;
   await $`mkdir src`;
-  await $`touch src/index.ts`;
+  if (!isMinimal) {
+    await $`touch src/index.ts`;
+  } else {
+    await $`touch src/index.mjs`;
+  }
 }
 
 if (useNodeModulesLinker) {
@@ -24,34 +29,36 @@ if (useNodeModulesLinker) {
   await fs.writeFile(".yarnrc.yml", YAML.stringify(yarnrc));
 }
 
-await $`yarn plugin import interactive-tools`;
-await $`yarn plugin import typescript`;
+if (!isMinimal) {
+  await $`yarn plugin import interactive-tools`;
+  await $`yarn plugin import typescript`;
 
-// ===========================================
-// DEPENDENCIES
-// ===========================================
+  // ===========================================
+  // DEPENDENCIES
+  // ===========================================
 
-const initialPackages = [
-  "@types/eslint",
-  "@types/jest",
-  "@types/prettier",
-  "@typescript-eslint/eslint-plugin",
-  "@typescript-eslint/parser",
-  "eslint",
-  "eslint-config-airbnb-base",
-  "eslint-config-prettier",
-  "eslint-import-resolver-node",
-  "eslint-plugin-import",
-  "eslint-plugin-jest",
-  "husky",
-  "jest",
-  "lint-staged",
-  "prettier",
-  "ts-jest",
-  "typescript",
-];
+  const initialPackages = [
+    "@types/eslint",
+    "@types/jest",
+    "@types/prettier",
+    "@typescript-eslint/eslint-plugin",
+    "@typescript-eslint/parser",
+    "eslint",
+    "eslint-config-airbnb-base",
+    "eslint-config-prettier",
+    "eslint-import-resolver-node",
+    "eslint-plugin-import",
+    "eslint-plugin-jest",
+    "husky",
+    "jest",
+    "lint-staged",
+    "prettier",
+    "ts-jest",
+    "typescript",
+  ];
 
-await $`yarn add -D ${initialPackages}`;
+  await $`yarn add -D ${initialPackages}`;
+}
 
 // ===========================================
 // SCRIPTS AND HUSKY SETTINGS
@@ -66,75 +73,81 @@ if (isMonorepoProject) {
       "yarn w:each test --bail --findRelatedTests --passWithNoTests",
   };
 } else {
-  packageJson.scripts = {
-    build: "tsc",
-    watch: "tsc --watch",
-    test: "jest",
-    "test:pre-commit": "yarn test --bail --findRelatedTests --passWithNoTests",
-  };
+  if (!isMinimal) {
+    packageJson.scripts = {
+      build: "tsc",
+      watch: "tsc --watch",
+      test: "jest",
+      "test:pre-commit":
+        "yarn test --bail --findRelatedTests --passWithNoTests",
+    };
+  }
 }
 
-Object.assign(packageJson.scripts, {
-  "pre-commit": "lint-staged",
-  postinstall: "husky install",
-});
-
-if (!isMonorepoProject) {
-  await $`yarn add -D pinst`;
+if (!isMinimal) {
   Object.assign(packageJson.scripts, {
-    prepack: "pinst --disable",
-    postpack: "pinst --enable",
+    "pre-commit": "lint-staged",
+    postinstall: "husky install",
   });
+
+  if (!isMonorepoProject) {
+    await $`yarn add -D pinst`;
+    Object.assign(packageJson.scripts, {
+      prepack: "pinst --disable",
+      postpack: "pinst --enable",
+    });
+  }
+
+  packageJson["lint-staged"] = {
+    "*": "prettier --ignore-unknown --write",
+    "*.ts": ["eslint --cache --fix", "yarn test:pre-commit"],
+  };
+  await fs.writeFile("package.json", stringify(packageJson));
+
+  await $`yarn husky install`;
+  await $`yarn husky add .husky/pre-commit "yarn pre-commit"`;
 }
-
-packageJson["lint-staged"] = {
-  "*": "prettier --ignore-unknown --write",
-  "*.ts": ["eslint --cache --fix", "yarn test:pre-commit"],
-};
-await fs.writeFile("package.json", stringify(packageJson));
-
-await $`yarn husky install`;
-await $`yarn husky add .husky/pre-commit "yarn pre-commit"`;
 
 // ===========================================
 // CONFIG FILES
 // ===========================================
+if (!isMinimal) {
+  await $`yarn tsc --init`;
+  await $`yarn ts-jest config:init`;
 
-await $`yarn tsc --init`;
-await $`yarn ts-jest config:init`;
-
-await fs.writeFile(
-  ".eslintrc.json",
-  stringify({
-    root: true,
-    parser: "@typescript-eslint/parser",
-    env: {
-      browser: true,
-      es2021: true,
-      node: true,
-      "jest/globals": true,
-    },
-    plugins: ["@typescript-eslint", "import", "jest"],
-    extends: [
-      "eslint:recommended",
-      "plugin:@typescript-eslint/recommended",
-      "plugin:import/recommended",
-      "plugin:import/typescript",
-      "plugin:jest/recommended",
-      "prettier",
-    ],
-    ignorePatterns: ["**/dist/**", "**/*.js"],
-    rules: {
-      "no-warning-comments": [
-        "error",
-        {
-          terms: ["todo", "fixme", "fix", "refactor"],
-        },
+  await fs.writeFile(
+    ".eslintrc.json",
+    stringify({
+      root: true,
+      parser: "@typescript-eslint/parser",
+      env: {
+        browser: true,
+        es2021: true,
+        node: true,
+        "jest/globals": true,
+      },
+      plugins: ["@typescript-eslint", "import", "jest"],
+      extends: [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:import/recommended",
+        "plugin:import/typescript",
+        "plugin:jest/recommended",
+        "prettier",
       ],
-      camelcase: "error",
-    },
-  })
-);
+      ignorePatterns: ["**/dist/**", "**/*.js"],
+      rules: {
+        "no-warning-comments": [
+          "error",
+          {
+            terms: ["todo", "fixme", "fix", "refactor"],
+          },
+        ],
+        camelcase: "error",
+      },
+    })
+  );
+}
 
 const gitIgnoreEntries = {
   BUILDS: ["dist"],
@@ -148,12 +161,14 @@ const gitIgnoreEntries = {
     "!.yarn/releases",
     "!.yarn/sdks",
     "!.yarn/versions",
-    "!.yarn/cache",
+    "node_modules",
   ],
 };
 
-if (useNodeModulesLinker) {
-  gitIgnoreEntries.YARN.push("node_modules");
+if (isMinimal) {
+  gitIgnoreEntries.YARN.push(".pnp.*");
+} else {
+  gitIgnoreEntries.YARN.push("!.yarn/cache");
 }
 
 await fs.writeFile(
@@ -163,6 +178,7 @@ await fs.writeFile(
 # ${key}
 #===========================
 ${gitIgnoreEntries[key].join("\n")}
+
 `);
   }, "")
 );
@@ -176,14 +192,16 @@ await fs.writeFile(
   })
 );
 
-const prettierIgnore = [
-  "dist",
-  "build",
-  "coverage",
-  "node_modules",
-  "**/.yarn",
-  "**/.pnp.*",
-];
-await fs.writeFile(".prettierignore", prettierIgnore.join("\n"));
+if (!isMinimal) {
+  const prettierIgnore = [
+    "dist",
+    "build",
+    "coverage",
+    "node_modules",
+    "**/.yarn",
+    "**/.pnp.*",
+  ];
+  await fs.writeFile(".prettierignore", prettierIgnore.join("\n"));
+}
 
 await $`git add . && git commit -m "Initial commit"`;

@@ -11,3 +11,13 @@ require("user-layouts")
 require("user-desktop")
 
 require("user-keymaps")
+
+require("user-rules")
+
+require("user-autostart")
+
+local naughty = require("naughty");
+naughty.notify({
+    title = "Welcome",
+    text = "Welcome back!"
+})

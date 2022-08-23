@@ -1,7 +1,7 @@
 ---------------------------
 -- Default awesome theme --
 ---------------------------
-
+local awful = require("awful");
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
 local rnotification = require("ruled.notification")
@@ -132,8 +132,17 @@ rnotification.connect_signal('request::rules', function()
         rule       = { urgency = 'critical' },
         properties = { bg = '#ff0000', fg = '#ffffff' }
     }
+    -- All notifications will match this rule.
+    rnotification.append_rule {
+        rule       = {},
+        properties = {
+            screen           = 1,
+            implicit_timeout = 15,
+        }
+    }
 end)
 
-return theme
+theme.notification_width = dpi(300)
+theme.notification_height = dpi(70)
 
--- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80
+return theme

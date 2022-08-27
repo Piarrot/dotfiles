@@ -35,3 +35,5 @@ for k, v in pairs(opt) do
     vim.opt[k] = v
 end
 
+require("user-keymaps")
+

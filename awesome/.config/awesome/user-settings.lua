@@ -12,7 +12,7 @@ return {
     },
     apps = {
         terminal = terminal,
-        launcher = "rofi -show run",
+        launcher = "rofi -show drun -theme ~/.config/rofi/launchers/type-1/style-5.rasi",
         launch_editor = launch_editor,
         file_manager = "thunar",
         launch_compositor = 'DISPLAY=":0" picom -b --experimental-backends && DISPLAY=":1" picom -b --experimental-backends',

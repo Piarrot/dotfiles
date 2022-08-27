@@ -162,7 +162,7 @@ client.connect_signal("request::default_keybindings", function()
 
         --- Toggle maximize windows
         awful.key({ keys.mod }, "m", function(c)
-            c.maximized = not c.maximized
+            client.focus.maximized = not client.focus.maximized
         end, { description = "toggle maximize", group = "client" }),
 
         --- Toggle Sticky

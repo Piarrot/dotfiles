@@ -1,11 +1,5 @@
 local awful = require("awful")
-local beautiful = require("beautiful")
 local ruled = require("ruled")
-
---- Get screen geometry
-local screen_width = awful.screen.focused().geometry.width
-local screen_height = awful.screen.focused().geometry.height
-local centered_client_placement = require("helpers.centered-client-placement")
 
 ruled.client.connect_signal("request::rules", function()
     --- Global
@@ -19,7 +13,6 @@ ruled.client.connect_signal("request::rules", function()
             honor_padding = true,
             screen = awful.screen.focused,
             focus = awful.client.focus.filter,
-            titlebars_enabled = beautiful.titlebar_enabled,
             placement = awful.placement.no_overlap + awful.placement.no_offscreen,
         },
     })
@@ -32,12 +25,13 @@ ruled.client.connect_signal("request::rules", function()
                 "Devtools", --- Firefox devtools
             },
             class = {
+                "zoom",
                 "Lxappearance",
                 "Nm-connection-editor",
             },
             name = {
-                "MEGAsync",
                 "Event Tester", -- xev
+                "ColorGrab"
             },
             role = {
                 "AlarmWindow",
@@ -49,6 +43,20 @@ ruled.client.connect_signal("request::rules", function()
                 "dialog",
             },
         },
-        properties = { floating = true },
+        properties = { floating = true, screen = awful.screen.focused },
+    })
+
+    ruled.client.append_rule({
+        id = "MEGAsync",
+        rule_any = {
+            name = {
+                "MEGAsync"
+            }
+        },
+        properties = {
+            floating = true,
+            offset = 500,
+            placement = awful.placement.resize_to_mouse + awful.placement.no_offscreen
+        }
     })
 end)

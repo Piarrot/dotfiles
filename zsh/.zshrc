@@ -7,10 +7,7 @@ alias pacrem="yay -Rsn"
 alias pacsearch="yay -Ss"
 
 #Configs
-alias zsconf="nvim ~/.zshrc && source ~/.zshrc"
-alias bspconf="nvim ~/.config/bspwm/bspwmrc"
-alias sxconf="nvim ~/.config/sxhkd/sxhkdrc"
-alias alaconf="nvim ~/.config/alacritty/alacritty.yml"
+alias econf="nvim ~/dotfiles"
 
 ########################################
 # TERMINAL CONFIG

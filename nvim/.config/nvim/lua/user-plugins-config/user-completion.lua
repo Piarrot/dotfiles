@@ -1,10 +1,4 @@
 local cmp = require("cmp")
-local luasnip = require("luasnip");
-
-local check_backspace = function()
-    local col = vim.fn.col "." - 1
-    return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
-end
 
 -- local kind_icons = {
 --     Text = "",
@@ -51,8 +45,8 @@ cmp.setup({
         ["<C-Down>"]=cmp.mapping.scroll_docs(4),
 
     }),
-    sources = { 
-        { name = "nvim_lsp" }, 
+    sources = {
+        { name = "nvim_lsp" },
         { name = 'luasnip' },
         { name = 'buffer'}
     },
@@ -64,6 +58,7 @@ cmp.setup({
             -- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
             vim_item.menu = ({
                 nvim_lsp = "[LSP]",
+                nvim_lua = "[NVIM]",
                 luasnip = "[Snippet]",
                 buffer = "[Buffer]",
                 path = "[Path]"
@@ -73,7 +68,6 @@ cmp.setup({
     },
     experimental = {
         native_menu = false,
-        ghost
     }
 })
 
@@ -105,4 +99,3 @@ cmp.setup.cmdline(':', {
     } })
 })
 
-require("user-lsp-config")

@@ -74,6 +74,11 @@ _G.packer_plugins = {
     path = "/home/piarrot/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
+  ["alpha-nvim"] = {
+    loaded = true,
+    path = "/home/piarrot/.local/share/nvim/site/pack/packer/start/alpha-nvim",
+    url = "https://github.com/goolord/alpha-nvim"
+  },
   ["bufferline.nvim"] = {
     loaded = true,
     path = "/home/piarrot/.local/share/nvim/site/pack/packer/start/bufferline.nvim",
@@ -144,11 +149,6 @@ _G.packer_plugins = {
     path = "/home/piarrot/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
   },
-  ["nvim-reload"] = {
-    loaded = true,
-    path = "/home/piarrot/.local/share/nvim/site/pack/packer/start/nvim-reload",
-    url = "https://github.com/famiu/nvim-reload"
-  },
   ["nvim-tree.lua"] = {
     loaded = true,
     path = "/home/piarrot/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
@@ -183,6 +183,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/piarrot/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
+  },
+  ["workspaces.nvim"] = {
+    loaded = true,
+    path = "/home/piarrot/.local/share/nvim/site/pack/packer/start/workspaces.nvim",
+    url = "https://github.com/natecraddock/workspaces.nvim"
   }
 }
 

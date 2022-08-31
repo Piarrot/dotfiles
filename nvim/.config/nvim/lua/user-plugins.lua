@@ -1,17 +1,26 @@
+local packer = require("packer")
+local use = packer.use
+
 local configurePacker = function ()
     -- Plugin manager
     use("wbthomason/packer.nvim")
 
     -- Code Highlighter
     use("nvim-treesitter/nvim-treesitter")
-    
+
     -- Reload configuration
-    use({"famiu/nvim-reload",requires = { {'nvim-lua/plenary.nvim'} }})
+    --use({"famiu/nvim-reload",requires = { {'nvim-lua/plenary.nvim'} }})
+
+    -- Projects
+    use("goolord/alpha-nvim")
+    use("natecraddock/workspaces.nvim")
+    --use("natecraddock/sessions.nvim")
 
     -- Utils
     use("lambdalisue/suda.vim") --Sudo save current buffer
     use({'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons'})
     use({"kyazdani42/nvim-tree.lua", requires="kyazdani42/nvim-web-devicons"})
+    use({"akinsho/toggleterm.nvim", tag = 'v2.*'})
 
     -- Telescope
     use({"nvim-telescope/telescope.nvim",requires = { {'nvim-lua/plenary.nvim'} }})
@@ -33,7 +42,7 @@ local configurePacker = function ()
     use("saadparwaiz1/cmp_luasnip")
 
     -- Snippets
-    use("L3MON4D3/LuaSnip") 
+    use("L3MON4D3/LuaSnip")
     use("rafamadriz/friendly-snippets")
 
     -- Color Schemes
@@ -58,14 +67,13 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 -- Autocommand that reloads neovim whenever you save the plugins.lua file
-vim.cmd([[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost user-plugins.lua source <afile> | PackerSync
-  augroup end
-]])
+-- vim.cmd([[
+--   augroup packer_user_config
+--     autocmd!
+--     autocmd BufWritePost user-plugins.lua source <afile> | PackerSync
+--   augroup end
+-- ]])
 
-local packer = require("packer")
 
 packer.init({
     display = {

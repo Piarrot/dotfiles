@@ -1,13 +1,51 @@
 require("bufferline").setup()
 
-require("nvim-tree").setup({
-    disable_netrw=false,
+
+local telescope = require("telescope")
+telescope.setup({
+  extensions = {
+    workspaces = {
+      -- keep insert mode after selection in the picker, default is false
+      keep_insert = true,
+    }
+  }
 })
 
-require("nvim-treesitter").setup()
+require("workspaces").setup({
+    hooks={
+        open = { "NvimTreeOpen", "Telescope find_files hidden=true" },
+    }
+})
+telescope.load_extension("workspaces")
 
+local nvim_tree = require("nvim-tree")
+nvim_tree.setup({
+    disable_netrw=true,
+    hijack_cursor=true,
+    sync_root_with_cwd = true,
+    respect_buf_cwd = true,
+    update_focused_file= {
+        enable = true,
+    }
+})
+
+require("nvim-treesitter.configs").setup({
+    ensure_installed = {"lua","typescript","html","css","scss","yaml","javascript","json","json5"},
+    auto_install=true,
+    highlight={enable=true}
+})
+
+
+--Install and configure LSP servers 
 require("mason").setup()
 require("mason-lspconfig").setup({
     ensure_installed={"sunmeko_lua","tsserver"},
     automatic_installation=true,
 })
+
+-- Load snippets from plugins
+require('luasnip.loaders.from_vscode').lazy_load()
+
+-- Setup autocompletion and LSP servers
+require("user-plugins-config/user-completion")
+require("user-plugins-config/user-dashboard")

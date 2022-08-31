@@ -2,7 +2,7 @@ local opt = {
     backup = false,
     clipboard = "unnamedplus",
     cmdheight = 1,
-    completeopt = {"menuone", "noselect"},
+    completeopt = {"menu","menuone", "noselect"},
     conceallevel = 0,
     fileencoding = "utf-8",
     hlsearch = true,
@@ -37,3 +37,5 @@ end
 
 require("user-keymaps")
 
+-- Setup colorscheme
+vim.cmd("colorscheme onedark")

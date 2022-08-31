@@ -12,3 +12,5 @@ font:
     family: UbuntuMono Nerd Font
     style: Bold Italic
   size: 14.0
+
+enable_experimental_conpty_backend: true

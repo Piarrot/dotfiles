@@ -1,13 +1,18 @@
 ########################################
 # ALIASES
 ########################################
+#Programs
+alias lg="lazygit"
+alias ld="lazydocker"
+
+#Pacman
 alias paci="yay -Sy --needed --noconfirm"
 alias pacup="yay -Syu --needed --noconfirm"
 alias pacrem="yay -Rsn"
 alias pacsearch="yay -Ss"
 
 #Configs
-alias econf="nvim ~/dotfiles"
+alias conf="nvim ~/dotfiles"
 
 ########################################
 # TERMINAL CONFIG

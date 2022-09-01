@@ -35,7 +35,8 @@ for k, v in pairs(opt) do
     vim.opt[k] = v
 end
 
-require("user-keymaps")
+require("user-options/user-keymaps")
+require("user-options/user-commands")
 
 -- Setup colorscheme
 vim.cmd("colorscheme onedark")

@@ -1,5 +1,9 @@
 require("bufferline").setup()
-
+require("toggleterm").setup({
+    direction = "float",
+    on_open = require("user-options/user-keymaps").on_term_attach
+})
+require("gitsigns").setup()
 
 local telescope = require("telescope")
 telescope.setup({
@@ -46,6 +50,12 @@ require("mason-lspconfig").setup({
 -- Load snippets from plugins
 require('luasnip.loaders.from_vscode').lazy_load()
 
+
+require("nvim-autopairs").setup()
+
+
+
 -- Setup autocompletion and LSP servers
-require("user-plugins-config/user-completion")
-require("user-plugins-config/user-dashboard")
+require("user-plugins/user-completion")
+require("user-plugins/user-dashboard")
+require("user-plugins/user-lsp")

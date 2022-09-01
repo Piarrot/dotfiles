@@ -8,19 +8,20 @@ local configurePacker = function ()
     -- Code Highlighter
     use("nvim-treesitter/nvim-treesitter")
 
-    -- Reload configuration
-    --use({"famiu/nvim-reload",requires = { {'nvim-lua/plenary.nvim'} }})
-
     -- Projects
     use("goolord/alpha-nvim")
     use("natecraddock/workspaces.nvim")
-    --use("natecraddock/sessions.nvim")
 
     -- Utils
     use("lambdalisue/suda.vim") --Sudo save current buffer
     use({'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons'})
     use({"kyazdani42/nvim-tree.lua", requires="kyazdani42/nvim-web-devicons"})
     use({"akinsho/toggleterm.nvim", tag = 'v2.*'})
+    use({"windwp/nvim-autopairs"})
+    use {
+      'lewis6991/gitsigns.nvim',
+      tag = 'release' -- To use the latest release
+    }
 
     -- Telescope
     use({"nvim-telescope/telescope.nvim",requires = { {'nvim-lua/plenary.nvim'} }})
@@ -31,6 +32,9 @@ local configurePacker = function ()
     -- LSP
     use("williamboman/mason-lspconfig.nvim")
     use("neovim/nvim-lspconfig")
+
+    -- DAP
+    use ('mfussenegger/nvim-dap')
 
     -- Auto completion
     use('hrsh7th/nvim-cmp')
@@ -86,3 +90,5 @@ packer.init({
 })
 
 packer.startup(configurePacker)
+
+require("user-plugins/user-plugin-options")

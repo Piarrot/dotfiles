@@ -14,6 +14,12 @@ keymap("n","<leader>f","<cmd>Telescope current_buffer_fuzzy_find<cr>")
 keymap("n","<F1>","<cmd>Telescope help_tags<cr>")
 keymap("n","<leader>P","<cmd>Telescope commands<cr>")
 
+-- Terminal
+keymap("n","<leader>t","<cmd>ToggleTerm<cr>")
+keymap("n","<leader>g",[[<cmd>TermExec cmd="lazygit"<cr>]])
+keymap("v","<leader>T","<cmd>ToggleTermSendCurrentLine<cr>")
+
+
 -- Navigation
 keymap("n", "<C-Down>", "<C-w>j")
 keymap("n", "<C-Up>", "<C-w>h")
@@ -84,20 +90,22 @@ keymap("n","<leader>r",":source $MYVIMRC<cr>", {silent=false})
 -- Search and replace
 keymap("v","<C-r>", '"hy:%s/<C-r>h//gc<left><left><left>')
 
-local on_lsp_attach = function ()
-    local lsp_buf = vim.lsp.buf;
-    local bufopts = { noremap=true, buffer=0, silent=false }
-    keymap('n', 'K', lsp_buf.hover, bufopts)
-    keymap('n', 'gD', lsp_buf.declaration, bufopts)
-    keymap('n', 'gd', lsp_buf.definition, bufopts)
-    keymap('n', 'gi', lsp_buf.implementation, bufopts)
-    keymap('n', 'gt', lsp_buf.type_definition, bufopts)
-    keymap('n', '<F2>', lsp_buf.rename, bufopts)
-    keymap('n', '<leader>d', "<cmd>Telescope diagnostics<cr>", bufopts)
-    keymap('n', '<c-.>', lsp_buf.code_action, bufopts)
-end
-
 return {
-    on_lsp_attach = on_lsp_attach
+    on_lsp_attach = function ()
+        local lsp_buf = vim.lsp.buf;
+        local bufopts = { noremap=true, buffer=0, silent=false }
+        keymap('n', 'K', lsp_buf.hover, bufopts)
+        keymap('n', 'gD', lsp_buf.declaration, bufopts)
+        keymap('n', 'gd', lsp_buf.definition, bufopts)
+        keymap('n', 'gi', lsp_buf.implementation, bufopts)
+        keymap('n', 'gt', lsp_buf.type_definition, bufopts)
+        keymap('n', '<F2>', lsp_buf.rename, bufopts)
+        keymap('n', '<leader>d', "<cmd>Telescope diagnostics<cr>", bufopts)
+        keymap('n', '<c-.>', lsp_buf.code_action, bufopts)
+    end,
+    on_term_attach = function()
+        local bufopts = { noremap=true, buffer=0, silent=true }
+        keymap("t","<esc>",[[<C-\><C-n>]], bufopts)
+    end
 }
 

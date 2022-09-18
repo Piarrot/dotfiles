@@ -1,10 +1,20 @@
 #!/usr/bin/env zx
 
 const isMonorepoProject = argv.monorepo;
+const showHelp = argv.help;
 const useNodeModulesLinker = argv["node-modules"];
 const isMinimal = argv["minimal"];
 
 const stringify = (thing) => JSON.stringify(thing, null, 4);
+
+if (showHelp){
+    console.log("Options:")
+    console.log("--monorepo: Initialize project as a monorepo")
+    console.log("--node-modules: Use node-modules as nodeLinker")
+    console.log("--minimal: create only minimal setup instead of full project")
+    process.exit(0)
+}
+
 
 // ===========================================
 // YARN INIT AND SETTINGS

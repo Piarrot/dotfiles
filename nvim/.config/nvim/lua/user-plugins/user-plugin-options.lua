@@ -1,4 +1,32 @@
-require("bufferline").setup()
+require("bufferline").setup({
+    options = {
+        indicator = {
+            style = "icon",
+            icon = "▎",
+        },
+        close_command = "Bdelete! %d",
+        right_mouse_command = "Bdelete! %d",
+        diagnostics = "nvim-lsp",
+        offsets = {
+            {
+                filetype = "NvimTree",
+                text = "File Explorer",
+                text_align = "left",
+                separator = true
+            }
+        }
+    }
+})
+
+local null_ls = require("null-ls")
+null_ls.setup({
+    sources = {
+        null_ls.builtins.formatting.stylua,
+        null_ls.builtins.diagnostics.eslint,
+        null_ls.builtins.completion.spell,
+    }
+})
+
 require("toggleterm").setup({
     direction = "float",
     on_open = require("user-options/user-keymaps").on_term_attach
@@ -7,16 +35,16 @@ require("gitsigns").setup()
 
 local telescope = require("telescope")
 telescope.setup({
-  extensions = {
-    workspaces = {
-      -- keep insert mode after selection in the picker, default is false
-      keep_insert = true,
+    extensions = {
+        workspaces = {
+            -- keep insert mode after selection in the picker, default is false
+            keep_insert = true,
+        }
     }
-  }
 })
 
 require("workspaces").setup({
-    hooks={
+    hooks = {
         open = { "NvimTreeOpen", "Telescope find_files hidden=true" },
     }
 })
@@ -24,27 +52,27 @@ telescope.load_extension("workspaces")
 
 local nvim_tree = require("nvim-tree")
 nvim_tree.setup({
-    disable_netrw=true,
-    hijack_cursor=true,
+    disable_netrw = true,
+    hijack_cursor = true,
     sync_root_with_cwd = true,
     respect_buf_cwd = true,
-    update_focused_file= {
+    update_focused_file = {
         enable = true,
     }
 })
 
 require("nvim-treesitter.configs").setup({
-    ensure_installed = {"lua","typescript","html","css","scss","yaml","javascript","json","json5"},
-    auto_install=true,
-    highlight={enable=true}
+    ensure_installed = { "lua", "typescript", "html", "css", "scss", "yaml", "javascript", "json", "json5" },
+    auto_install = true,
+    highlight = { enable = true }
 })
 
 
---Install and configure LSP servers 
+--Install and configure LSP servers
 require("mason").setup()
 require("mason-lspconfig").setup({
-    ensure_installed={"sunmeko_lua","tsserver"},
-    automatic_installation=true,
+    ensure_installed = { "sunmeko_lua", "tsserver" },
+    automatic_installation = true,
 })
 
 -- Load snippets from plugins

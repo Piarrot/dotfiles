@@ -31,24 +31,23 @@ local cmp = require("cmp")
 cmp.setup({
     snippet = {
         expand = function(args)
-            require('luasnip').lsp_expand(args.body)
-        end
+            require("luasnip").lsp_expand(args.body)
+        end,
     },
     window = {},
     mapping = cmp.mapping.preset.insert({
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<Esc>"] = cmp.mapping.close(),
         ["<CR>"] = cmp.mapping.confirm({
-            select = true
+            select = true,
         }),
-        ["<C-Up>"]= cmp.mapping.scroll_docs(-4),
-        ["<C-Down>"]=cmp.mapping.scroll_docs(4),
-
+        ["<C-Up>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-Down>"] = cmp.mapping.scroll_docs(4),
     }),
     sources = {
         { name = "nvim_lsp" },
-        { name = 'luasnip' },
-        { name = 'buffer'}
+        { name = "luasnip" },
+        { name = "buffer" },
     },
     formatting = {
         fields = { "abbr", "menu" },
@@ -61,41 +60,38 @@ cmp.setup({
                 nvim_lua = "[NVIM]",
                 luasnip = "[Snippet]",
                 buffer = "[Buffer]",
-                path = "[Path]"
+                path = "[Path]",
             })[entry.source.name]
             return vim_item
-        end
+        end,
     },
     experimental = {
         native_menu = false,
-    }
+    },
 })
-
 -- Set configuration for specific filetype.
-cmp.setup.filetype('lua', {
-    sources={
+cmp.setup.filetype("lua", {
+    sources = {
         { name = "nvim_lua" },
         { name = "luasnip" },
         { name = "buffer" },
         { name = "path" },
-    }
+    },
 })
-
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline('/', {
+cmp.setup.cmdline("/", {
     mapping = cmp.mapping.preset.cmdline(),
     sources = { {
-        name = 'buffer'
-    } }
+        name = "buffer",
+    } },
 })
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(':', {
+cmp.setup.cmdline(":", {
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({ {
-        name = 'path'
+        name = "path",
     } }, { {
-        name = 'cmdline'
-    } })
+        name = "cmdline",
+    } }),
 })
-

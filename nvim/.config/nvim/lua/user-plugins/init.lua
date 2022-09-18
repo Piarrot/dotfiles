@@ -1,7 +1,7 @@
 local packer = require("packer")
 local use = packer.use
 
-local configurePacker = function ()
+local configurePacker = function()
     -- Plugin manager
     use("wbthomason/packer.nvim")
 
@@ -13,18 +13,15 @@ local configurePacker = function ()
     use("natecraddock/workspaces.nvim")
 
     -- Utils
-    use("lambdalisue/suda.vim") --Sudo save current buffer
-    use({'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons'})
-    use({"kyazdani42/nvim-tree.lua", requires="kyazdani42/nvim-web-devicons"})
-    use({"akinsho/toggleterm.nvim", tag = 'v2.*'})
-    use({"windwp/nvim-autopairs"})
-    use {
-      'lewis6991/gitsigns.nvim',
-      tag = 'release' -- To use the latest release
-    }
+    use({ "lambdalisue/suda.vim" }) --Sudo save current buffer
+    use({ "akinsho/bufferline.nvim", tag = "v2.*", requires = "kyazdani42/nvim-web-devicons" })
+    use({ "kyazdani42/nvim-tree.lua", requires = "kyazdani42/nvim-web-devicons" })
+    use({ "akinsho/toggleterm.nvim", tag = "v2.*" })
+    use({ "windwp/nvim-autopairs" })
+    use({ "lewis6991/gitsigns.nvim", tag = "release" })
 
     -- Telescope
-    use({"nvim-telescope/telescope.nvim",requires = { {'nvim-lua/plenary.nvim'} }})
+    use({ "nvim-telescope/telescope.nvim", requires = { { "nvim-lua/plenary.nvim" } } })
 
     -- LSP, DAP, Linters and formatters Manager
     use("williamboman/mason.nvim")
@@ -32,17 +29,21 @@ local configurePacker = function ()
     -- LSP
     use("williamboman/mason-lspconfig.nvim")
     use("neovim/nvim-lspconfig")
+    use({
+        "jose-elias-alvarez/null-ls.nvim",
+        requires = { "nvim-lua/plenary.nvim" },
+    })
 
     -- DAP
-    use ('mfussenegger/nvim-dap')
+    use("mfussenegger/nvim-dap")
 
     -- Auto completion
-    use('hrsh7th/nvim-cmp')
-    use('hrsh7th/cmp-cmdline')
-    use('hrsh7th/cmp-buffer')
-    use('hrsh7th/cmp-path')
-    use('hrsh7th/cmp-nvim-lsp')
-    use('hrsh7th/cmp-nvim-lua')
+    use("hrsh7th/nvim-cmp")
+    use("hrsh7th/cmp-cmdline")
+    use("hrsh7th/cmp-buffer")
+    use("hrsh7th/cmp-path")
+    use("hrsh7th/cmp-nvim-lsp")
+    use("hrsh7th/cmp-nvim-lua")
     use("saadparwaiz1/cmp_luasnip")
 
     -- Snippets
@@ -53,19 +54,15 @@ local configurePacker = function ()
     use("lunarvim/colorschemes")
     use("lunarvim/darkplus.nvim")
 
-    if PACKER_BOOTSTRAP then
-        packer.sync()
-    end
 end
-
 
 local fn = vim.fn
 -- Automatically install packer
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 
 if fn.empty(fn.glob(install_path)) > 0 then
-    PACKER_BOOTSTRAP = fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim",
-        install_path })
+    PACKER_BOOTSTRAP =
+        fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
     print("Installing packer close and reopen Neovim...")
     vim.cmd([[packadd packer.nvim]])
 end
@@ -78,15 +75,14 @@ end
 --   augroup end
 -- ]])
 
-
 packer.init({
     display = {
         open_fn = function()
             return require("packer.util").float({
-                border = "rounded"
+                border = "rounded",
             })
-        end
-    }
+        end,
+    },
 })
 
 packer.startup(configurePacker)

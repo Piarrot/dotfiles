@@ -6,8 +6,8 @@ alias lg="lazygit"
 alias ld="lazydocker"
 
 #Pacman
-alias paci="yay -Sy --needed --noconfirm"
-alias pacup="yay -Syu --needed --noconfirm"
+alias paci="yay -Sy --needed --noconfirm --sudoloop"
+alias pacup="yay -Syu --needed --noconfirm --sudoloop"
 alias pacrem="yay -Rsn"
 alias pacsearch="yay -Ss"
 

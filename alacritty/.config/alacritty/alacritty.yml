@@ -14,3 +14,4 @@ font:
   size: 14.0
 
 enable_experimental_conpty_backend: true
+working_directory: None

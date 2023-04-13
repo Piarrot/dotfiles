@@ -6,8 +6,8 @@ alias lg="lazygit"
 alias ld="lazydocker"
 
 #Pacman
-alias paci="yay -Sy --needed --noconfirm --sudoloop"
-alias pacup="yay -Syu --needed --noconfirm --sudoloop"
+alias paci="yay -Sy --sudoloop"
+alias pacup="yay -Syu --sudoloop"
 alias pacrem="yay -Rsn"
 alias pacsearch="yay -Ss"
 
@@ -107,6 +107,8 @@ source "$ZSH/oh-my-zsh.sh"
 export PATH="$HOME/bin:$PATH"
 
 export PATH="$PATH:/opt/insomnia"
+
+export PATH="$HOME/.dotnet/tools:$PATH"
 
 # export MANPATH="/usr/local/man:$MANPATH"
 

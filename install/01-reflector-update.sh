@@ -1,7 +1,8 @@
 #!/bin/bash
 
 sudo reflector \
-    -l 50 \
-    -f 10 \
+    --fastest 30 \
+    --latest 10 \
+    --score 5 \
     --sort rate \
     --save /etc/pacman.d/mirrorlist

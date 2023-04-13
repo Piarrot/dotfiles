@@ -36,10 +36,11 @@ dunst &
 xsetroot -cursor_name left_ptr &
 gnome-keyring-daemon --start --components=pkcs11,secrets,ssh &
 lxpolkit &
-DISPLAY=":0" picom -b --experimental-backends &
+DISPLAY=":0" picom -b &
 ~/bin/wacom.sh &
 wmname LG3D &
-numlockx
+numlockx &
+# light-locker --lock-on-suspend --lock-after-screensaver=30 &
 
 feh --bg-fill ~/MEGA/Personal/Wallpapers/color-blur-1.jpg
 wal -R
@@ -61,4 +62,8 @@ sleep 3
 thunar --daemon &
 flameshot &
 thunderbird &
+megasync &
+pasystray &
+copyq &
+blueman-applet &
 # spotify &

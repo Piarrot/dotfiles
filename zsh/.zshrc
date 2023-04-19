@@ -126,7 +126,7 @@ export PATH="$HOME/.dotnet/tools:$PATH"
 ########################################
 # GIT
 ########################################
-source /usr/share/doc/git-extras/git-extras-completion.zsh
+# source /usr/share/doc/git-extras/git-extras-completion.zsh
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -147,10 +147,10 @@ source /usr/share/nvm/install-nvm-exec
 ##########################
 # WAL
 ##########################
-(cat ~/.cache/wal/sequences &)
-source ~/.cache/wal/colors-tty.sh
-waltile() {
-    wal -n -i "$@"
-    feh --bg-tile "$(< "${HOME}/.cache/wal/wal")"
-}
+# (cat ~/.cache/wal/sequences &)
+# source ~/.cache/wal/colors-tty.sh
+# waltile() {
+#     wal -n -i "$@"
+#     feh --bg-tile "$(< "${HOME}/.cache/wal/wal")"
+# }
 
